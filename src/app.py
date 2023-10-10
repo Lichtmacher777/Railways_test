@@ -6,7 +6,6 @@ from tools import time_to_minutes, minutes_to_time
 
 EXTERNAL_URL = "http://localhost:7000/data/"
 
-
 class HamburgRailExchangeScheduler:
     def __init__(self):
         self.city_data = self.get_city_data()
@@ -21,13 +20,13 @@ class HamburgRailExchangeScheduler:
         return data
 
     def notify_city(self, city, message):
-        """Send message about change to another city. WARNING: This method makes an external API call!"""
+        """Send a message about change to another city. WARNING: This method makes an external API call!"""
         print(f"WARNING! Sending message to exchange in {city}.")
         urllib.request.Request(f"{EXTERNAL_URL}{city}/", data=json.dumps(message))
 
     def schedule_train_to_hamburg(self, city: str, desired_time: str):
         """
-        Schedule a train to Hamburg around desired time. Make sure that no other train leaves to Hamburg
+        Schedule a train to Hamburg around the desired time. Make sure that no other train leaves to Hamburg
         within 15 minutes of this time, otherwise move the time.
         """
         scheduled_minutes = time_to_minutes(desired_time)
@@ -58,7 +57,7 @@ class HamburgRailExchangeScheduler:
 
     def schedule_train_from_hamburg(self, city: str, desired_time: str):
         """
-        Schedule a train from Hamburg around desired time. Make sure that no train leaves to Hamburg
+        Schedule a train from Hamburg around the desired time. Make sure that no train leaves to Hamburg
         from that same city at the same time as that will confuse passengers. Move the train 1 minute
         into the future if that should happen.
         """
@@ -81,7 +80,6 @@ class HamburgRailExchangeScheduler:
         arrival_time = minutes_to_time(arrival_minutes)
         self.notify_city(city, {"new_train_from_hamburg": arrival_time})
         return (departure_time, arrival_time)
-
 
 if __name__ == "__main__":
     exchange = HamburgRailExchangeScheduler()

@@ -6,7 +6,7 @@ def time_to_minutes(time: str) -> int:
 
 
 def minutes_to_time(minutes: int) -> str:
-    """Convert minutes since midnight to time string ('%H:%M')."""
+    """Convert minutes since midnight to a time string ('%H:%M')."""
     hours = int(minutes / 60)
     remaining_minutes = minutes - hours * 60
     return f"{hours:02}:{remaining_minutes:02}"
